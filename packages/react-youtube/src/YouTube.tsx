@@ -168,14 +168,14 @@ const defaultProps: YouTubeProps = {
   title: '',
   loading: undefined,
   opts: {},
-  onReady: () => {},
-  onError: () => {},
-  onPlay: () => {},
-  onPause: () => {},
-  onEnd: () => {},
-  onStateChange: () => {},
-  onPlaybackRateChange: () => {},
-  onPlaybackQualityChange: () => {},
+  onReady: () => { },
+  onError: () => { },
+  onPlay: () => { },
+  onPause: () => { },
+  onEnd: () => { },
+  onStateChange: () => { },
+  onPlaybackRateChange: () => { },
+  onPlaybackQualityChange: () => { },
 };
 
 const propTypes = {
@@ -364,6 +364,10 @@ class YouTube extends React.Component<YouTubeProps> {
    */
   updatePlayer = () => {
     this.internalPlayer?.getIframe().then((iframe) => {
+      // prevent src.null errors
+      if (!iframe) {
+        return;
+      }
       if (this.props.id) iframe.setAttribute('id', this.props.id);
       else iframe.removeAttribute('id');
       if (this.props.iframeClassName) iframe.setAttribute('class', this.props.iframeClassName);
